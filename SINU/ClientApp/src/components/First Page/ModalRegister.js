@@ -101,7 +101,7 @@ function ModalRegister() {
         </div>
         
         
-              <button type="submit" className="button-login" onClick={navigateTo} >
+              <button type="submit" className="button-login" onClick={navigate} >
             Sign up
           </button>       
       </form>
