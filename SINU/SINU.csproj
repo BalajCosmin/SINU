@@ -17,17 +17,26 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\NewFolder\**" />
     <Compile Remove="NewFolder\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\NewFolder\**" />
     <Content Remove="NewFolder\**" />
+    <EmbeddedResource Remove="ClientApp\NewFolder\**" />
     <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\NewFolder\**" />
     <None Remove="NewFolder\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Controllers\UserController_backup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\public\app.js" />
+    <None Remove="ClientApp\src\index.css.css" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

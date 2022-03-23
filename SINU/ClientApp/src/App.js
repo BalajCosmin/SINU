@@ -1,22 +1,38 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
+import 'bootstrap/dist/css/bootstrap.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import registerServiceWorker from './registerServiceWorker';
+import './index.css';
+import LayoutLoggedIn from "./LayoutLoggedIn";
 
-import './custom.css'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import Home from './Home.js';
+import { useEffect } from 'react';
 
-export default class App extends Component {
-  static displayName = App.name;
 
-  render () {
+
+const LoggedInLayout = () => {
     return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data' component={FetchData} />
-      </Layout>
-    );
-  }
+
+            <Switch>
+                <Redirect exact from="/" to="/home" />
+                <Route exact path="/home">
+                    <Home />
+                </Route>
+            </Switch>
+      
+    )
 }
+
+
+function App() {
+
+    return (
+  
+       <h1>test</h1>
+    );
+}
+
+export default App;
+
