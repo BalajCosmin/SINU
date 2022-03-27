@@ -1,8 +1,9 @@
 import React from "react";
-import UserService from "../../NewFolder/UserService"
+
 import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
+import Axios from "axios";
 
 
 
@@ -12,96 +13,121 @@ import { useNavigate } from 'react-router-dom';
 function ModalRegister() {
 
 
-    const { register,handleSubmit } = useForm();
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [userName, setUserName] = useState("");
-    const [id, setId] = useState("");
-    const [email, setEmail] = useState("");
+    const [data, setData] = useState  ( {
 
+                Username : "",
+                Email : "",
+                Password : "",
+                Confirm : "",
+                IDNP : ""
 
-    console.log(password);
-    const navigate = useNavigate();
-    navigate('/Home');
+        }
+    )
 
-    console.log(userName);
-    const onSubmit = (data) => {
-
-   
-       
-        return UserService.singUpRequest(JSON.stringify(data)).then(console.log(data))
-
-    };
+    
+    const url = "https://localhost:44328/api/register";
 
 
 
+ 
+//   const navigate = useNavigate();
+  //  navigate('/Home');
 
+
+    function handle(e) {
+
+        const newdata = {...data }
+        newdata[e.target.id] = e.target.value;
+        setData(newdata)
+        console.log(newdata)
+    }
+
+
+    function submit(e) {
+
+        e.preventDefault();
+        Axios.post(url, {
+            Username: data.Username,
+            Email: data.Email,
+            Password: data.Password,
+            IDNP: data.IDNP
+
+
+        }).then(res => { console.log(res.data)})
+
+
+
+    }
 
   return (
       <div id="registerModal" className="modal">
-          <form >
+          <form onSubmit={(e) => submit(e)}>
         <h3>Register</h3>
 
               <input
-          name="firstName"
-           required
-           id="firstName"
-          type="text"
-          className="password-modal"
-          placeholder="Enter username"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
+                  name="Username"
+                  required
+                  id="Username"
+                  type="text"
+                  className="password-modal"
+                  placeholder="Enter username"
+                  value={data.Username}
+                  onChange={(e) => handle(e) }
+        
         />
 
-              <input type="email"
-              className="email-modal"
+              <input type="Email"
                   placeholder="Enter email"
                   required
-                  id="email-modal"
+                  id="Email"
                   type="text"
                   className="password-modal"
                   placeholder="Enter Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}              />
+                  value={data.Email}
+                  onChange={(e) => handle(e)}
+                       />
 
               <input
-          name="password-modal"
+          name="Password"
           required
-          id="password-modal"
+          id="Password"
           type="password"
           className="password-modal"
            placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={data.Password}
+                  onChange={(e) => handle(e)}
+                  
         />
 
               <input
-          name="confirm-password-modal"
+          name="Confirm"
           required
-          id="confirm-password-modal"
+          id="Confirm"
           type="password"
           className="password-modal"
                   placeholder="Confirm password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={data.Confirm}
+                  onChange={(e) => handle(e)}
+              
         />
 
         <div className="form-group">
           <label>Identification Code</label>
                   <input
-            name="id-modal"
+            name="IDNP"
             required
-            id="id-modal"
+            id="IDNP"
             type="text"
             className="password-modal"
             placeholder="Enter ID"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
+                      value={data.IDNP}
+                      onChange={(e) => handle(e)}
+           
           />
         </div>
         
-        
-              <button type="submit" className="button-login" onClick={navigate} >
+
+              <button type="submit" className="button-login">
             Sign up
           </button>       
       </form>

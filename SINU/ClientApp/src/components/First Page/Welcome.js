@@ -16,11 +16,11 @@ function Welcome(props) {
 
      
 
-        <div class="container" style={{ width: "100%", height: "100%", position: "static", top: "0%", left:"0%" }}>
-            <div class="teacherContainer">
+        <div className="welcomeContainer">
+            <div className="teacherContainer">
             <Teacher />
             </div>
-            <div class="studentContainer">
+            <div className="studentContainer">
                 <Student />
                 </div>
 
