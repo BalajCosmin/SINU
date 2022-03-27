@@ -1,12 +1,17 @@
-﻿namespace SINU.UserModel
+﻿using System.ComponentModel.DataAnnotations;
+
+
+
+namespace SINU.UserModel
 {
     public class User
     {
 
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string UserPassWord { get; set; }
-        public string UserEmail { get; set; }
+        [Key]
+        public string IDNP { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
 
 
     }
