@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SINU.Data.UserContext;
+using SINU.Data;
 
 namespace SINU.Migrations
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20220327151625_CreatUsersTable")]
     partial class CreatUsersTable
     {

@@ -7,8 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
-using SINU.Data.UserContext;
+using SINU.Data;
 using SINU.Repository;
+using Microsoft.OpenApi.Models;
 
 namespace SINU
 {
@@ -24,10 +25,22 @@ namespace SINU
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserContext>(
-          options => options.UseSqlServer(Configuration.GetConnectionString("SINUAppCon")));
+            services.AddDbContext<AppDbContext>(
+            options => options.UseSqlServer(Configuration.GetConnectionString("SINUAppCon")));
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IClassRepository, ClassRepository>();
+            services.AddScoped<ISubjectRepository, SubjectRepository>();
+            //services.AddScoped<IStudyYearRepository, StudyYearRepository>();
+            services.AddScoped<ISubjectClassRepository, SubjectClassRepository>();
+            //services.AddScoped<ISubjectProfesorRepository, SubjectProfesorRepository>();
+            //services.AddScoped<ISubjectStudentRepository, SubjectStudentRepository>();
+
+
+
+
+
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(options =>
               options.SerializerSettings.ContractResolver = new DefaultContractResolver());
@@ -47,7 +60,10 @@ namespace SINU
                 configuration.RootPath = "ClientApp/build";
             });
 
-
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "II_Proiect", Version = "v1" });
+            });
 
         }
 
@@ -63,6 +79,8 @@ namespace SINU
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "II_Proiect v1"));
             }
             else
             {
@@ -77,12 +95,16 @@ namespace SINU
 
             app.UseRouting();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+
+
+
 
             app.UseSpa(spa =>
             {

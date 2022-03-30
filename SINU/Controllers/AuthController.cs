@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SINU.DTO;
 using SINU.DTO.LoginDTO;
 using SINU.Repository;
-using SINU.UserModel;
+using SINU.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +24,13 @@ namespace SINU.Controllers
             _repository = repository;
         }
 
+
+        //[HttpGet]
+        //public List<User> GetAll()
+        //{
+        //    return _repository.GetAll();
+        //}
+
         [HttpPost("register")]
         public IActionResult Register(RegisterDTO dto)
         {
@@ -36,10 +43,13 @@ namespace SINU.Controllers
                 Email = dto.Email
             };
 
-            _repository.Create(user);
-
-
-            return Ok("success");
+            if (_repository.Register(user) !=null)
+            {
+                return Ok("success");
+            } else
+            {
+                return BadRequest("something went wrong on registering.");
+            }
 
 
 
@@ -53,9 +63,9 @@ namespace SINU.Controllers
         {
 
             var user = _repository.GetUserByEmail(dto.Email);
-            if (user == null) return BadRequest(new { message = "Invalid Credentials " });
+            if (user == null) return NotFound(new { message = $"User with email {dto.Email} not found." });
 
-            if (user.Password != dto.Password) return BadRequest(new { message = "Invalid Credentials " });
+            if (user.Password != dto.Password) return BadRequest(new { message = "Incorrect password." });
 
             return Ok(user);
 

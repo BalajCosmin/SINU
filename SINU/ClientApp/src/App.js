@@ -10,6 +10,7 @@ import { useRoutes } from 'hookrouter';
 function App() {
 
     const routes = {
+        /*'/swagger': () => <Swagger />,*/
         '/': () => <Welcome />,
         '/home': () => <Home />,
 

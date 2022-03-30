@@ -2,38 +2,59 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SINU.Data.UserContext;
+using SINU.Data;
 using SINU.Repository;
-using SINU.UserModel;
+using SINU.Model;
 
 namespace SINU.Repository
 {
 
     public class UserRepository : IUserRepository
     {
-        private readonly UserContext _context;
+        private readonly AppDbContext _context;
 
-      public  UserRepository(UserContext context) {
+      public  UserRepository(AppDbContext context) {
 
             _context = context;
         
         }
 
-        public User Create(User user)
+        public User Register(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
 
-            return user;
-
-
+            var existingUser = _context.Users.FirstOrDefault(u => u.IDNP == user.IDNP);
+            if (existingUser == null)
+            {
+                return null;
+            } else
+            {
+                existingUser.Email = user.Email;
+                existingUser.Password = user.Password;
+                existingUser.Username = user.Username;
+                _context.Users.Update(existingUser);
+                _context.SaveChanges();
+                return existingUser;
+            }
         }
 
-        public User GetUserByEmail(string email){
-
-
-            return _context.Users.FirstOrDefault(u => u.Email == email);
+        public List<User> GetAll()
+        {
+            return _context.Users.ToList();
         }
+
+        public User GetUserByEmail(string Email)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email == Email);
+        }
+
+        public User GetUserByUsername(string Username)
+        {
+            return _context.Users.FirstOrDefault(u => u.Username == Username);
+        }
+
+
+
+
 
 
     }
