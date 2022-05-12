@@ -1,0 +1,479 @@
+/*PROFILE SECTION*/
+.student-profile {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+}
+.student-profile-container {
+	width: 100%;
+	padding-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #0e0e0e;
+	overflow-y: scroll;
+}
+.student-profile-container-name {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	background-color: rgb(37, 37, 37);
+	background: radial-gradient(circle 300px at 0% 100%, rgb(58, 168, 251) 90%, rgb(37, 37, 37) 90.4%);
+	margin: 5px;
+	color: white;
+	font-size: 20px;
+	font-weight: 700;
+	padding: 15px 24px;
+	margin-top: 80px;
+	border-radius: 4px;
+}
+
+.circle {
+	visibility: hidden;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	margin: 0;
+	background-color: black;
+}
+.student-profile-details {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: end;
+	width: auto;
+}
+.edit-logout-buttons {
+	padding: 0;
+	margin-top: 0px;
+}
+.edit-button {
+	background-color: rgb(58, 168, 251);
+	width: 40%;
+	border: 0;
+	padding: 8px 12px;
+	margin-left: 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.6s;
+}
+.edit-button:hover {
+	background-color: white;
+}
+.edit-button:hover .Link {
+	color: rgb(37, 37, 37);
+}
+.Link {
+	color: white;
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: 500;
+	transition: all 0.6s;
+}
+details {
+	width: 35%;
+	background-color: rgb(37, 37, 37);
+	margin: 5px;
+	color: white;
+	font-size: 20px;
+	font-weight: 500;
+	padding: 16px 24px;
+	border-bottom: 2px solid gray;
+	border-radius: 4px;
+}
+details:hover {
+	border-color: white;
+}
+summary {
+	list-style: none;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 24px;
+	font-weight: 700;
+}
+summary:hover {
+	cursor: pointer;
+}
+.arrow {
+	opacity: 0.6;
+}
+summary:hover .arrow {
+	opacity: 1;
+}
+.student-profile-container-details {
+	font-size: 18px;
+	font-weight: 500;
+	border-top: 1px solid gray;
+	transition-delay: 0.4s;
+}
+
+.details-paragraph {
+	display: flex;
+	align-items: center;
+	padding: 0px 40px;
+	margin: 8px;
+	background-color: rgb(27, 27, 27);
+}
+#student {
+	color: rgb(58, 168, 251);
+	margin: 10px;
+	font-weight: 700;
+}
+/*GRADES SECTION*/
+
+.grades {
+	display: flex;
+	background-color: rgb(14, 14, 14);
+}
+.grades-container {
+	width: 100vw;
+}
+.grid {
+	display: grid;
+	margin: 20px;
+	grid-template-columns: 1 fr;
+	grid-template-rows: repeat(3, 350px);
+}
+.grades-card {
+	background-color: rgb(37, 37, 37);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 6px;
+	border-radius: 16px;
+	transition: all 0.6s;
+	position: relative;
+	overflow: hidden;
+}
+.grades-container-bakground-image {
+	background-color: rgb(58, 168, 251);
+	width: 150px;
+	height: 150px;
+	border-radius: 50% 50%;
+	position: absolute;
+	transition: all 0.6s;
+}
+.grades-card:hover .grades-container-bakground-image {
+	width: 450px;
+	height: 450px;
+	transform: translate(0px, 20px);
+}
+.grades-png {
+	width: 90px;
+	transform: translateY(80px);
+	transition: all 0.2s;
+}
+.grades-card:hover .grades-png {
+	transform: translateY(80px);
+	opacity: 1;
+}
+.grades-container-subject-name {
+	font-size: 30px;
+	color: white;
+	font-weight: 700;
+	transform: translateY(120px);
+	transition: all 0.6s;
+}
+.grades-container-teacher-name {
+	opacity: 0;
+	font-size: 18px;
+	color: white;
+	transform: translateY(160px);
+	transition: all 0.6s;
+}
+.grades-container-marks {
+	display: flex;
+	align-items: center;
+	opacity: 0;
+	color: white;
+	transform: translateY(105px);
+	transition: all 0.4s;
+}
+
+.grades-container-finalAverege {
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	opacity: 0;
+	transform: translateY(160px);
+	transition: all 0.6s;
+}
+.average {
+	margin: 0px 5px;
+	padding: 3px 6px;
+	background-color: white;
+	border-radius: 3px;
+	font-weight: 600;
+}
+
+.grades-card:hover .grades-container-message {
+	opacity: 1;
+	transform: translateY(120px);
+}
+.grades-card:hover .grades-container-subject-name {
+	opacity: 1;
+	transform: translateY(60px);
+}
+.grades-card:hover .grades-container-marks {
+	opacity: 1;
+	transform: translateY(90px) !important;
+}
+.grades-card:hover .grades-container-teacher-name {
+	opacity: 1;
+	transform: translateY(75px);
+}
+.grades-card:hover .grades-container-finalAverege {
+	cursor: pointer;
+	opacity: 1;
+	transform: translateY(105px);
+}
+
+/*Settings*/
+.settings {
+	display: flex;
+	background-color: rgb(14, 14, 14);
+}
+.settings-container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.settings-container-row {
+	display: flex;
+	background-color: rgb(37, 37, 37);
+	align-items: center;
+	overflow: hidden;
+	color: white;
+	max-height: 50px;
+	width: 40%;
+	margin: 6px;
+	position: relative;
+}
+.settings-img {
+	position: relative;
+	background-color: rgb(58, 168, 251);
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+	transform: translate(-70px, 50px);
+	transition: all 0.85s;
+	transition-delay: 0.1s;
+}
+.settings-container-row:hover .settings-img {
+	transform: translate(0px, 0px);
+	padding: 0;
+	width: 100%;
+	height: 700px;
+}
+.settings-text1 {
+	position: absolute;
+	font-size: 22px;
+	font-weight: 700;
+	transform: translateX(20px);
+	cursor: default;
+}
+.settings-text2 {
+	position: absolute;
+	font-size: 22px;
+	font-weight: 700;
+	transform: translateX(280px);
+	cursor: default;
+}
+.settings-button {
+	cursor: pointer;
+	margin: 10px;
+	padding: 9px 34px 9px 30px;
+	display: flex;
+	align-items: center;
+	border-radius: 25px;
+	font-size: 22px;
+	font-weight: 600;
+	border: 0;
+	color: white;
+	background-color: rgb(58, 168, 251);
+	transition: all 0.7s;
+}
+.settings-button:hover {
+	background-color: white;
+	color: rgb(37, 37, 37);
+}
+.modal-edit-data {
+	position: absolute;
+	padding: 16px 26px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	animation-name: modalSettings;
+	z-index: 10;
+	animation-duration: 1.2s;
+	border-radius: 10px;
+}
+
+@keyframes modalSettings {
+	from {
+		opacity: 0;
+		transform: translateY(-1300px);
+	}
+	to {
+		opacity: 1;
+	}
+}
+.modal-edit-data-title {
+	color: white;
+	font-size: 30px;
+	font-weight: 700;
+	margin-bottom: 12px;
+	border: 0;
+}
+.modal-edit-data-input {
+	background-color: rgb(47, 47, 47);
+	color: white;
+	font-size: 18px;
+	padding: 9px 10px 4px 10px;
+	margin-left: 15px;
+	margin-right: 15px;
+	border: 0;
+	border-bottom: 4px solid transparent;
+	border-radius: 4px;
+	transition: border-color 0.2s;
+}
+.modal-edit-data-input :focus {
+	border-bottom: 3px solid rgb(58, 168, 251);
+	outline: 0em;
+}
+.modal-edit-data-button {
+	background-color: rgb(58, 168, 251);
+	width: 40%;
+	color: white;
+	font-size: 18px;
+	font-weight: 600;
+	padding: 8px 10px;
+	margin: 4px;
+	cursor: pointer;
+	border-radius: 20px;
+	border: 0px;
+	transition: all 0.6s;
+}
+.modal-edit-data-button:hover {
+	background-color: white;
+	color: black;
+}
+.modal-error {
+	color: red;
+	font-size: 11px;
+	width: 100%;
+	height: 12px;
+	padding: 3px 0px 5px 30px;
+}
+/*End of SETTINGS*/
+
+/*Help*/
+.help {
+	display: flex;
+}
+.help-container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.help-container-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: gray;
+}
+.text-area {
+	resize: none;
+}
+/*End of Help*/
+
+@media screen and (min-width: 400px) and (max-width: 580px) {
+	.student-profile-container-name {
+		width: 80%;
+		background: radial-gradient(circle 300px at 0% 100%, rgb(58, 168, 251) 60%, rgb(37, 37, 37) 60.4%);
+	}
+
+	.grid {
+		grid-template-columns: repeat(1, 1fr);
+		grid-template-rows: repeat(13, 350px);
+	}
+	.grades-container-bakground-image {
+		transform: translate(230px, 290px);
+	}
+	.grades-card:hover .grades-container-bakground-image {
+		width: 650px;
+	}
+	.settings-container-row {
+		width: 90%;
+	}
+	.settings-text2 {
+		transform: translateX(190px);
+	}
+}
+@media screen and (min-width: 580px) {
+	.student-profile-container-name {
+		width: 80%;
+		background: radial-gradient(circle 300px at 0% 100%, rgb(58, 168, 251) 60%, rgb(37, 37, 37) 60.4%);
+	}
+	.grid {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(7, 350px);
+	}
+	.grades-container-bakground-image {
+		transform: translate(180px, 290px);
+	}
+	.settings-container-row {
+		width: 80%;
+	}
+	.settings-text2 {
+		transform: translateX(220px);
+	}
+}
+
+@media screen and (min-width: 900px) {
+	.grid {
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(5, 350px);
+	}
+	.grades-container-bakground-image {
+		transform: translate(180px, 290px);
+	}
+	.settings-container-row {
+		width: 60%;
+	}
+	.settings-text2 {
+		transform: translateX(260px);
+	}
+}
+@media screen and (min-width: 1350px) {
+	.student-profile-container-name {
+		width: 50%;
+	}
+	.grid {
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: repeat(3, 350px);
+	}
+	.grades-container-bakground-image {
+		transform: translate(165px, 285px);
+	}
+	.grades-card:hover .grades-container-bakground-image {
+		width: 450px;
+	}
+	.settings-container-row {
+		width: 45%;
+	}
+	.settings-text2 {
+		transform: translateX(280px);
+	}
+}

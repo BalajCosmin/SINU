@@ -1,112 +1,189 @@
-import React from "react";
-import UserService from "../../NewFolder/UserService"
-import { useEffect, useState } from 'react';
-import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import Axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
+function ModalRegister(props) {
+	const url = "https://localhost:44328/api/register";
 
+	const initialValues = {
+		email: "",
+		password: "",
+		confirmPassword: "",
+		IDNP: "",
+	};
+	const [formValues, setFormValues] = useState(initialValues);
+	const [formErrors, setFormErrors] = useState({});
+	// const [isSubmit, setIsSubmit] = useState(false);
 
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormValues({ ...formValues, [name]: value });
+		console.log(formValues);
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		// setIsSubmit(true);
 
+		if (Object.keys(validate(formValues)).length === 0) {
+			Axios.post(url, {
+				Email: formValues.email,
+				Password: formValues.password,
+				IDNP: formValues.IDNP,
+			})
+				.then((response) => {
+					console.log(response.data);
+				})
+				.catch((err) => {
+					formErrors.IDNP = "";
+					formErrors.password = "";
+					formErrors.email = "";
+					if (err.response.status === 400) {
+						formErrors.email = err.response.data;
+						console.log(err.response.data);
+					}
+					if (err.response.status === 404) {
+						formErrors.IDNP = err.response.data;
+						console.log(err.response.data);
+					}
+					setFormErrors(formErrors);
+				});
+		}
+		setFormErrors(validate(formValues));
+	};
 
+	// useEffect(() => {
+	// 	console.log(formErrors);
+	// 	if (Object.keys(formErrors).length === 0 && isSubmit) {
+	// 		console.log(formValues);
+	// 	}
+	// }, [formErrors]);
 
-function ModalRegister() {
+	const validate = (values) => {
+		const errors = {};
+		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+		if (!regex.test(values.email)) {
+			errors.email = "This is not a valid email format!";
+		}
+		if (values.password.length < 4) {
+			errors.password = "Password must be more than 4 characters";
+		}
+		if (values.password !== values.confirmPassword) {
+			errors.confirmPassword = "Password isnt the same";
+		}
 
+		if (values.IDNP.length !== 11) {
+			errors.IDNP = "you are missing some characters";
+		}
 
-    const { register,handleSubmit } = useForm();
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [userName, setUserName] = useState("");
-    const [id, setId] = useState("");
-    const [email, setEmail] = useState("");
+		return errors;
+	};
 
+	const usePasswordToggle = () => {
+		const [visible, setVisiblity] = useState(false);
 
-    console.log(password);
-    const navigate = useNavigate();
-    navigate('/Home');
+		const Icon = (
+			<FontAwesomeIcon
+				icon={visible ? faEye : faEyeSlash}
+				onClick={() => setVisiblity((visiblity) => !visiblity)}
+				style={{ fontSize: "24px", color: "gray" }}
+			/>
+		);
+		const InputType = visible ? "text" : "password";
+		return [InputType, Icon];
+	};
+	const [PasswordInputType, ToogleIcon] = usePasswordToggle();
+	const [PasswordInputType1, ToogleIcon1] = usePasswordToggle();
 
-    console.log(userName);
-    const onSubmit = (data) => {
+	return (
+		<div className="modal">
+			<form>
+				<div className="modal-title">Register</div>
 
-   
-       
-        return UserService.singUpRequest(JSON.stringify(data)).then(console.log(data))
+				<div className="inputField">
+					<h2 className="firstPage-modal-error">{formErrors.IDNP}</h2>
+					<input
+						name="IDNP"
+						type="text"
+						className="inputModal"
+						placeholder="Enter ID"
+						value={formValues.IDNP}
+						onChange={handleChange}
+						style={{ borderColor: formErrors.IDNP ? "red" : "" }}
+					/>
+					<h1 className="firstPage-modal-text">Identification code</h1>
+				</div>
+				<div className="inputField">
+					<h2 className="firstPage-modal-error">{formErrors.email}</h2>
+					<input
+						name="email"
+						placeholder="Enter email"
+						type="text"
+						className="inputModal"
+						value={formValues.email}
+						onChange={handleChange}
+						style={{ borderColor: formErrors.email ? "red" : "" }}
+					/>
+					<h1 className="firstPage-modal-text">Email</h1>
+				</div>
+				<div className="inputField">
+					<h2 className="firstPage-modal-error">{formErrors.password}</h2>
+					<input
+						name="password"
+						type={PasswordInputType}
+						className="inputModal"
+						placeholder="Enter password"
+						value={formValues.password}
+						onChange={handleChange}
+						style={{ borderColor: formErrors.password ? "red" : "" }}
+					/>
+					<h1 className="firstPage-modal-text">Password</h1>
+					<div className="password-toggle-icon" id="register">
+						{ToogleIcon}
+					</div>
+				</div>
 
-    };
+				<div className="inputField">
+					<h2 className="firstPage-modal-error">{formErrors.confirmPassword}</h2>
+					<input
+						name="confirmPassword"
+						type={PasswordInputType1}
+						className="inputModal"
+						placeholder="Confirm password"
+						value={formValues.confirmPassword}
+						onChange={handleChange}
+						style={{ borderColor: formErrors.confirmPassword ? "red" : "" }}
+					/>
+					<h1 className="firstPage-modal-text">Confirm Password</h1>
+					<div className="password-toggle-icon" id="register">
+						{ToogleIcon1}
+					</div>
+				</div>
 
-
-
-
-
-  return (
-      <div id="registerModal" className="modal">
-          <form >
-        <h3>Register</h3>
-
-              <input
-          name="firstName"
-           required
-           id="firstName"
-          type="text"
-          className="password-modal"
-          placeholder="Enter username"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-
-              <input type="email"
-              className="email-modal"
-                  placeholder="Enter email"
-                  required
-                  id="email-modal"
-                  type="text"
-                  className="password-modal"
-                  placeholder="Enter Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}              />
-
-              <input
-          name="password-modal"
-          required
-          id="password-modal"
-          type="password"
-          className="password-modal"
-           placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-        />
-
-              <input
-          name="confirm-password-modal"
-          required
-          id="confirm-password-modal"
-          type="password"
-          className="password-modal"
-                  placeholder="Confirm password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-
-        <div className="form-group">
-          <label>Identification Code</label>
-                  <input
-            name="id-modal"
-            required
-            id="id-modal"
-            type="text"
-            className="password-modal"
-            placeholder="Enter ID"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-          />
-        </div>
-        
-        
-              <button type="submit" className="button-login" onClick={navigate} >
-            Sign up
-          </button>       
-      </form>
-    </div>
-  );
+				<button
+					type="submit"
+					className="modal-button-submit"
+					onClick={handleSubmit}
+					disabled={!formValues.email || !formValues.password || !formValues.IDNP || !formValues.confirmPassword}
+				>
+					Sign up
+				</button>
+				<h4>
+					Already a member?
+					<button
+						className="sign-up-from-login-modal"
+						onClick={() => {
+							props.closeSignUp(false);
+							props.openLogin(true);
+						}}
+					>
+						Log In
+					</button>
+				</h4>
+			</form>
+		</div>
+	);
 }
 
 export default ModalRegister;
