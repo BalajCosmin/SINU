@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Data;
-using System.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SINU.UserModel;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace SINU.Controllers
 {
@@ -25,14 +20,16 @@ namespace SINU.Controllers
 
         [HttpGet]
         //se poate face si cu EntityFramework in loc de proceduri SQL
-        public JsonResult Get() {
+        public JsonResult Get()
+        {
             string query = @" select UserID,FirstName,LastName,AccountName,Password,Email from
   dbo.Users";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("SINUAppCon");
             SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource)) {
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
                 myCon.Open();
 
                 using (SqlCommand myComand = new SqlCommand(query, myCon))
@@ -53,7 +50,7 @@ namespace SINU.Controllers
         [HttpPost]
         public JsonResult Post(User user)
         {
-            string query = @" INSERT INTO dbo.Users values (@FirstName,@LastName,@AccountName,@Password,@Email)";
+            string query = @" INSERT INTO dbo.Users values (@UserName,@Password,@Email)";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("SINUAppCon");
@@ -65,13 +62,12 @@ namespace SINU.Controllers
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
 
-                    myCommand.Parameters.AddWithValue("@FirstName", user.UserFirstName );
-                    myCommand.Parameters.AddWithValue("@LastName", user.UserLastName  );
-                    myCommand.Parameters.AddWithValue("@AccountName", user.UserAccountName);
+                    myCommand.Parameters.AddWithValue("@UserName", user.UserName);
                     myCommand.Parameters.AddWithValue("@Password", user.UserPassWord);
                     myCommand.Parameters.AddWithValue("@Email", user.UserEmail);
 
-                  
+
+
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
                     myReader.Close();
@@ -100,9 +96,7 @@ namespace SINU.Controllers
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
                     myCommand.Parameters.AddWithValue("@UserId", user.UserId);
-                    myCommand.Parameters.AddWithValue("@FirstName", user.UserFirstName);
-                    myCommand.Parameters.AddWithValue("@LastName", user.UserLastName);
-                    myCommand.Parameters.AddWithValue("@AccountName", user.UserAccountName);
+                    myCommand.Parameters.AddWithValue("@UserName", user.UserName);
                     myCommand.Parameters.AddWithValue("@Password", user.UserPassWord);
                     myCommand.Parameters.AddWithValue("@Email", user.UserEmail);
                     myReader = myCommand.ExecuteReader();
@@ -132,7 +126,7 @@ namespace SINU.Controllers
                 using (SqlCommand myCommand = new SqlCommand(query, myCon))
                 {
                     myCommand.Parameters.AddWithValue("@UserId", id);
-              
+
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
                     myReader.Close();
